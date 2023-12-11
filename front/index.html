@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RMS Titanic</title>
+    <link href="https://fonts.googleapis.com/css?family=Goudy+Bookletter+1911" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </head>
+  <body>
+    <dialog class="mdl-dialog" style="text-align: center; width: 400px;">
+      <img src="" width="350" id="dialogPic">
+      <div class="mdl-dialog__content" id="dialogText">
+        <p>
+          Teste da caixa de diálogo
+        </p>
+      </div>
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button close">X</button>
+      </div>
+    </dialog>
+    <div>
+    <main style="padding: 2em;">
+      <div style="text-align: center;">
+      <img id="boia "src="https://em-content.zobj.net/source/apple/354/ring-buoy_1f6df.png" style="width: 100px;">
+    <div style="text-align: center;">
+      <h3 style="font-family: 'Goudy Bookletter 1911', serif;">R.M.S. TITANIC</h3>
+      <h5 style="font-size: 15px;">Essa API foi criada com o objetivo de prever, via machine learning, se um passageiro sobreviveria ao histórico naufrágio do navio Titanic.<br>
+      Para conferir se você sobreviveria, complete o formulário a seguir com os dados do passageiro e clique no botão "Enviar"!</h5>
+    </div>
+    <form action="#">
+      <div style="max-width:600px; margin-left: 300px;">
+        <div>
+          <label for="title">Sexo:</label>
+          <select id="title" name="titles">
+            <option></option>
+            <option value="Mr.">Masculino</option>
+            <option value="Mrs.">Feminino</option>
+          </select>
+        </div>
+      <div>
+        <label for="nameInput">Nome:</label>
+        <input type="text" id="firstName">
+      </div>
+      <div>
+        <label for="nameInput">Sobrenome:</label>
+        <input type="text" id="lastName">
+      </div>
+      <div>
+        <label for="ageInput">Idade:</label>
+        <input type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="ageInput">
+      </div>
+      <div>
+        <label for="class">Classe:</label>
+        <select id="class" name="titles">
+          <option></option>
+          <option value="1">Primeira Classe</option>
+          <option value="2">Segunda Classe</option>
+          <option value="3">Terceira Classe</option>
+        </select>
+      </div>
+      <div>
+        <label for="embarked">Porto de embarque:</label>
+        <select id="embarked" name="titles">
+          <option></option>
+          <option value="S">Southhampton</option>
+          <option value="C">Cherbourg</option>
+          <option value="Q">Queenstown</option>
+        </select>
+      </div>
+      <span>Cônjuge a bordo:</span>
+      <label for="withSpouse">
+        <input type="checkbox" id="withSpouse" class="mdl-checkbox__input">
+      </label>
+      <div>
+        <label for="ageInput">Nº de irmãos a bordo</label>
+        <input type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="siblings">
+      </div>
+      <div>
+        <label for="ageInput">Nº de parentes a bordo</label>
+        <input type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="parents">
+      </div>
+      <div>
+        <label for="ageInput">Nº de filhos a bordo</label>
+        <input type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="children">
+      </div>
+    </div>
+    </form>
+    <div style="text-align: center;">
+      <button type="button" onclick="sendRequest()">Enviar</button>
+    </div>
+  </main>
+  </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script>
+      function sendRequest() {
+
+        sex = {
+          'Mr.': 'male',
+          'Mrs.': 'female',
+          'Miss.': 'female',
+          'Master.': 'male'
+        }
+
+        fullName = document.getElementById('lastName').value + ' ' +
+          document.getElementById('title').value + ', ' + document.getElementById('firstName').value;
+
+        sibsp = parseInt(document.getElementById('siblings').value) + document.getElementById('withSpouse').checked ? 1 : 0;
+        parch = parseInt(document.getElementById('parents').value) + parseInt(document.getElementById('children').value)
+        var request = {
+          'n': fullName,
+          's': sex[document.getElementById('title').value],
+          'a': document.getElementById('ageInput').value,
+          'c': document.getElementById('class').value,
+          'si': sibsp,
+          'p': parch,
+          'f': '125',
+          'ca': 'B1',
+          'e': document.getElementById('embarked').value
+        };
+
+        var dialog = document.querySelector('dialog');
+        dialog.querySelector('.close').addEventListener('click', function() {
+          dialog.close();
+        });
+
+        congrats_msg = "Parabéns, você sobreviveria ao naufrágio!"
+        sorry_msg = "Infelizmente, você não sobreviveria ao naufrágio..."
+        $.getJSON("/survived", request, function(res) {
+          document.getElementById('dialogText').innerHTML = res.survived == 'yes' ? congrats_msg : sorry_msg;
+          document.getElementById('dialogPic').src =  res.survived == 'yes' ? "https://em-content.zobj.net/source/apple/354/partying-face_1f973.png" : "https://em-content.zobj.net/source/apple/354/dizzy-face_1f635.png"
+          dialog.showModal();
+        });
+      }
+    </script>
+  </body>
+</html>
