@@ -5,7 +5,7 @@ from pdb import set_trace
 
 def main(argv):
 
-    helpers = joblib.load('/Users/gabrielafaria/Desktop/mvp/mvp3_titanic/ml/titanic.pkl')
+    helpers = joblib.load('/ml/titanic.pkl')
     data = pd.read_csv(argv[1])
     result = pd.DataFrame()
     result['PassengerId'] = data['PassengerId']
