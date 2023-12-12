@@ -6,8 +6,8 @@ import pandas as pd
 # To run: pytest -v testes.py
 
 # Parâmetros    
-training = pd.read_csv("/Users/gabrielafaria/Desktop/mvp/mvp3_titanic/ml/train.csv")
-testing = pd.read_csv("/Users/gabrielafaria/Desktop/mvp/mvp3_titanic/ml/test.csv")
+training = pd.read_csv("/ml/train.csv")
+testing = pd.read_csv("/ml/test.csv")
 features = ['PassengerId','Survived','Pclass','Name','Sex','Age','SibSp','Parch','Ticket','Fare','Cabin','Embarked']
     
 def test_split():
