@@ -1,4 +1,4 @@
-# Minha API em REST com Machine Learning
+# Minha API em REST com Machine Learning - Raquel Allemão
 
 Projeto parte da disciplina de **Qualidade de Software, Segurança e Sistemas Inteligentes** - PUC Rio
 
