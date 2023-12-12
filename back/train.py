@@ -58,7 +58,7 @@ def main(argv):
     if (best_model != None):
         print("Best model: " + best_model['name'] + ", score: {}".format(best_score))
         helpers['model'] = best_model['model']
-        joblib.dump(helpers, '/Users/gabrielafaria/Desktop/mvp/mvp3_titanic/titanic.pkl')
+        joblib.dump(helpers, '/ml/titanic.pkl')
 
 if __name__ == "__main__":
     main(argv)
