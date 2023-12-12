@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    url = ('/Users/gabrielafaria/Desktop/mvp/mvp3_titanic/front/index.html')
+    url = ('/front/index.html')
     index_path = os.path.join(app.static_folder, url)
     return send_file(index_path)
 
@@ -25,7 +25,7 @@ def index():
 @app.route('/survived', methods=['GET'])
 
 def get_prediction():
-    helpers = pd.read_pickle('/Users/gabrielafaria/Desktop/mvp/mvp3_titanic/ml/titanic.pkl')
+    helpers = pd.read_pickle('/ml/titanic.pkl')
     model = [helpers]
 
     passenger = {};
